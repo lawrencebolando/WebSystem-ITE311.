@@ -2,14 +2,22 @@
 
 namespace App\Controllers;
 
-class Home extends BaseController
+use CodeIgniter\Controller;
+
+class Home extends Controller
 {
     public function index()
     {
-        // Load the view content (your actual page content)
-        $content = view('home'); // we'll create this view next
+        return view('home');   // Loads app/Views/home.php
+    }
 
-        // Load the template and inject the content
-        return view('template', ['content' => $content]);
+    public function about()
+    {
+        return view('about');  // Loads app/Views/about.php
+    }
+
+    public function contact()
+    {
+        return view('contact'); // Loads app/Views/contact.php
     }
 }
