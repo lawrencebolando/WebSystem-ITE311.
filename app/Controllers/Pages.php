@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use CodeIgniter\Controller;
 
-class Home extends Controller
+class Pages extends Controller
 {
     public function index()
     {
@@ -27,3 +27,5 @@ class Home extends Controller
         return view('template', $data);
     }
 }
+
+
