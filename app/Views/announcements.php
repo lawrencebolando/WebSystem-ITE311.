@@ -1,88 +1,63 @@
-<!-- app/Views/announcements.php -->
+<?= $this->extend('template') ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Announcements</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f8f9fa;
-            margin: 40px;
-        }
-        h1 {
-            text-align: center;
-            color: #333;
-        }
-        .announcement {
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        .buttons {
-            margin-top: 10px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 6px 12px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-right: 5px;
-            font-size: 14px;
-        }
-        .btn:hover {
-            background-color: #0056b3;
-        }
-        .btn-delete {
-            background-color: #dc3545;
-        }
-        .btn-delete:hover {
-            background-color: #a71d2a;
-        }
-        .add-btn {
-            display: inline-block;
-            margin-bottom: 20px;
-            background: #28a745;
-            padding: 8px 15px;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .add-btn:hover {
-            background: #1e7e34;
-        }
-    </style>
-</head>
-<body>
+<?= $this->section('content') ?>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-primary">All Announcements</h3>
+        <?php if (session()->get('role') === 'teacher' || session()->get('role') === 'admin'): ?>
+            <a href="<?= base_url('add-announcement') ?>" class="btn btn-success">
+                <i class="fas fa-plus"></i> Add New Announcement
+            </a>
+        <?php endif; ?>
+    </div>
 
-    <h1>Latest Announcements</h1>
-
-    <!-- Add Button -->
-    <a href="/add-announcement" class="add-btn">+ Add New Announcement</a>
-
-    <?php if (!empty($announcements) && is_array($announcements)): ?>
-        <?php foreach ($announcements as $row): ?>
-            <div class="announcement">
-                <h2><?= esc($row['title']) ?></h2>
-                <p><?= esc($row['content']) ?></p>
-                <small>Posted on: <?= esc($row['date_posted']) ?></small>
-
-                <div class="buttons">
-                    <a href="/edit-announcement/<?= $row['id'] ?>" class="btn">Edit</a>
-                    <a href="/delete-announcement/<?= $row['id'] ?>" class="btn btn-delete">Delete</a>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No announcements found.</p>
+    <!-- Flash Messages -->
+    <?php if (session()->getFlashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?= session()->getFlashdata('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
     <?php endif; ?>
 
-</body>
-</html>
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?= session()->getFlashdata('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    <?php endif; ?>
+
+    <?php if (!empty($announcements) && is_array($announcements)): ?>
+        <div class="row g-3">
+            <?php foreach ($announcements as $row): ?>
+                <div class="col-md-12">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title text-primary"><?= esc($row['title']) ?></h5>
+                                <small class="text-muted"><?= date('M d, Y H:i', strtotime($row['created_at'])) ?></small>
+                            </div>
+                            <p class="card-text"><?= nl2br(esc($row['content'])) ?></p>
+                            
+                            <?php if (session()->get('role') === 'teacher' || session()->get('role') === 'admin'): ?>
+                                <div class="btn-group" role="group">
+                                    <a href="<?= base_url('edit-announcement/' . $row['id']) ?>" class="btn btn-sm btn-warning">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="<?= base_url('delete-announcement/' . $row['id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this announcement?');">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </a>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-info text-center py-5">
+            <i class="fas fa-inbox fa-3x mb-3"></i>
+            <p class="mb-0">No announcements found.</p>
+        </div>
+    <?php endif; ?>
+</div>
+<?= $this->endSection() ?>

@@ -105,7 +105,7 @@
   </div>
 
   <!-- Quick Stats Row -->
-  <div class="row g-3">
+  <div class="row g-3 mb-4">
     <div class="col-md-4">
       <div class="card shadow-sm h-100">
         <div class="card-header fw-semibold">Upcoming Deadlines</div>
@@ -132,6 +132,40 @@
           </div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- Announcements Section -->
+  <div class="card shadow-sm">
+    <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
+      <span><i class="fas fa-bullhorn"></i> Latest Announcements</span>
+      <a href="<?= base_url('announcements') ?>" class="btn btn-sm btn-outline-primary">View All</a>
+    </div>
+    <div class="card-body">
+      <?php 
+        // Get announcements from the model
+        $announcementModel = new \App\Models\AnnouncementModel();
+        $announcements = $announcementModel->orderBy('created_at', 'DESC')->limit(5)->findAll();
+      ?>
+      <?php if (!empty($announcements)): ?>
+        <div class="list-group list-group-flush">
+          <?php foreach ($announcements as $announcement): ?>
+            <div class="list-group-item">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="mb-1 text-primary"><?= esc($announcement['title']) ?></h6>
+                <small class="text-muted"><?= date('M d, Y', strtotime($announcement['created_at'])) ?></small>
+              </div>
+              <p class="mb-1 text-muted"><?= substr(esc($announcement['content']), 0, 100) ?>...</p>
+              <a href="<?= base_url('announcements') ?>" class="btn btn-sm btn-link">Read More</a>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php else: ?>
+        <div class="text-center py-4">
+          <i class="fas fa-inbox fa-2x text-muted mb-2"></i>
+          <p class="text-muted">No announcements yet.</p>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>

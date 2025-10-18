@@ -30,10 +30,11 @@ $routes->get('courses/(:num)', 'Course::view/$1');
 $routes->post('course/enroll', 'Course::enroll');
 $routes->post('course/unenroll', 'Course::unenroll');
 $routes->get('courses/my-enrollments', 'Course::myEnrollments');
-// announcements
-$routes->get('/announcements', 'Announcement::index');
-$routes->get('/add-announcement', 'Announcement::add');
-$routes->post('/add-announcement', 'Announcement::add');
-$routes->get('/edit-announcement/(:num)', 'Announcement::edit/$1');
-$routes->get('/delete-announcement/(:num)', 'Announcement::delete/$1');
 
+// Announcement Routes
+$routes->get('announcements', 'Announcement::index');
+$routes->get('add-announcement', 'Announcement::add');
+$routes->post('add-announcement', 'Announcement::add');
+$routes->get('edit-announcement/(:num)', 'Announcement::edit/$1');
+$routes->post('edit-announcement/(:num)', 'Announcement::edit/$1');
+$routes->get('delete-announcement/(:num)', 'Announcement::delete/$1');

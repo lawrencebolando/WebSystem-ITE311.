@@ -26,8 +26,8 @@
   <div class="card mt-4 shadow-sm">
     <div class="card-header fw-semibold">Announcements</div>
     <div class="card-body">
-      <a href="/add-announcement" class="btn btn-success me-2">Add Announcement</a>
-      <a href="/announcements" class="btn btn-primary">View All Announcements</a>
+      <a href="<?= base_url('add-announcement') ?>" class="btn btn-success me-2">Add Announcement</a>
+      <a href="<?= base_url('announcements') ?>" class="btn btn-primary">View All Announcements</a>
     </div>
   </div>
 

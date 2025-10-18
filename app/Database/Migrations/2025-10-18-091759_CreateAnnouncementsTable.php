@@ -10,23 +10,21 @@ class CreateAnnouncementsTable extends Migration
     {
         $this->forge->addField([
             'id' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'unsigned' => true,
+                'type'           => 'INT',
+                'constraint'     => 11,
+                'unsigned'       => true,
                 'auto_increment' => true,
             ],
             'title' => [
-                'type' => 'VARCHAR',
-                'constraint' => 255,
-                'null' => false,
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
             ],
             'content' => [
                 'type' => 'TEXT',
-                'null' => false,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
-                'null' => true,
+                'null' => false,
             ],
         ]);
 

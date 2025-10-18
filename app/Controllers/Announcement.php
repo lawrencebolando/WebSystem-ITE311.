@@ -3,20 +3,16 @@
 namespace App\Controllers;
 
 use App\Models\AnnouncementModel;
-use CodeIgniter\Controller;
 
 class Announcement extends BaseController
 {
-    // ✅ Display all announcements
     public function index()
     {
         $model = new AnnouncementModel();
         $data['announcements'] = $model->findAll();
-
         return view('announcements', $data);
     }
 
-    // ✅ Show Add form or handle Add logic
     public function add()
     {
         helper(['form']);
@@ -32,16 +28,17 @@ class Announcement extends BaseController
                 $data = [
                     'title' => $this->request->getPost('title'),
                     'content' => $this->request->getPost('content'),
-                    'date_posted' => date('Y-m-d H:i:s'),
-                    'posted_by' => session()->get('user_id')
+                    'created_at' => date('Y-m-d H:i:s')
                 ];
 
                 if ($model->insert($data)) {
                     session()->setFlashdata('success', 'Announcement added successfully.');
-                    return redirect()->to('/announcements');
+                    return redirect()->to(base_url('announcements'));
                 } else {
                     session()->setFlashdata('error', 'Failed to add announcement.');
                 }
+            } else {
+                session()->setFlashdata('error', 'Validation failed. Please check your input.');
             }
         }
 
@@ -50,13 +47,11 @@ class Announcement extends BaseController
         ]);
     }
 
-    // ✅ Show Edit form or handle update
     public function edit($id = null)
     {
         echo "Edit announcement with ID: " . $id;
     }
 
-    // ✅ Delete specific announcement
     public function delete($id = null)
     {
         echo "Delete announcement with ID: " . $id;
