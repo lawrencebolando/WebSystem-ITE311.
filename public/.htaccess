@@ -1,3 +1,22 @@
+<IfModule mod_rewrite.c>
+    Options -Indexes
+    RewriteEngine On
+
+    # If user directly requests public/index.php, internally route to a missing path
+    # so CodeIgniter renders its own 404 page instead of Apache's plain 404.
+    RewriteCond %{THE_REQUEST} \s/+.*index\.php [NC]
+    RewriteRule ^index\.php$ index.php/__ci404__ [L]
+
+    # Ensure Authorization header is passed to PHP
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+
+    # If the requested resource doesn't exist, route to index.php
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ index.php [L]
+</IfModule>
+
 # Disable directory browsing
 Options -Indexes
 
@@ -14,7 +33,7 @@ Options -Indexes
 	# If you installed CodeIgniter in a subfolder, you will need to
 	# change the following line to match the subfolder you need.
 	# http://httpd.apache.org/docs/current/mod/mod_rewrite.html#rewritebase
-	# RewriteBase /
+	RewriteBase /ITE311-BOLANDO/public/
 
 	# Redirect Trailing Slashes...
 	RewriteCond %{REQUEST_FILENAME} !-d

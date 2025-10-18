@@ -9,33 +9,40 @@ class UserSeeder extends Seeder
     public function run()
     {
         $data = [
+            // Admin User
             [
-                'name'     => 'Admin User',
-                'email'    => 'admin@example.com',
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
                 'password' => password_hash('admin123', PASSWORD_DEFAULT),
-                'role'     => 'admin',
+                'role' => 'admin',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
+
+            // Teacher User
             [
-                'name'     => 'Instructor One',
-                'email'    => 'instructor1@example.com',
-                'password' => password_hash('teach123', PASSWORD_DEFAULT),
-                'role'     => 'instructor',
+                'name' => 'teacher',
+                'email' => 'teacher@gmail.com',
+                'password' => password_hash('teacher123', PASSWORD_DEFAULT),
+                'role' => 'teacher',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
+
+            // Student User
             [
-                'name'     => 'Student One',
-                'email'    => 'student1@example.com',
-                'password' => password_hash('stud123', PASSWORD_DEFAULT),
-                'role'     => 'student',
-            ],
-            [
-                'name'     => 'Student Two',
-                'email'    => 'student2@example.com',
-                'password' => password_hash('stud123', PASSWORD_DEFAULT),
-                'role'     => 'student',
+                'name' => 'student',
+                'email' => 'student@gmail.com',
+                'password' => password_hash('student123', PASSWORD_DEFAULT),
+                'role' => 'student',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s'),
             ],
         ];
 
-        // Insert multiple rows
+        // Insert all users
         $this->db->table('users')->insertBatch($data);
+        
+        echo "Sample users created successfully!\n";
     }
 }

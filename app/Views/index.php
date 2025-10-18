@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Home</title>
-</head>
-<body>
-    <h1>Home</h1>
-    <nav>
-        <a href="<?= site_url('home') ?>">Home</a> |
-        <a href="<?= site_url('home/about') ?>">About</a> |
-        <a href="<?= site_url('home/contact') ?>">Contact</a>
-    </nav>
-    <p>Home</p>
-</body>
-</html>
+<?= $this->extend('template') ?>
+
+<?= $this->section('content') ?>
+<div class="hero">
+    <h1>Learning Management System</h1>
+    <p>A comprehensive educational platform designed to facilitate effective learning and academic excellence</p>
+    
+    <div class="mt-3">
+        <a href="<?= base_url('about') ?>" class="btn">Learn More</a>
+        <a href="<?= base_url('contact') ?>" class="btn btn-outline">Contact Us</a>
+    </div>
+</div>
+<?= $this->endSection() ?>
