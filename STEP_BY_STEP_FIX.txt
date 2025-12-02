@@ -1,0 +1,105 @@
+═══════════════════════════════════════════════════════════════
+  FIX: Create Announcements Table - STEP BY STEP
+═══════════════════════════════════════════════════════════════
+
+ERROR: Table 'lms_bolando.announcements' doesn't exist
+
+SOLUTION: Create the table using phpMyAdmin
+
+═══════════════════════════════════════════════════════════════
+STEP 1: Open phpMyAdmin
+═══════════════════════════════════════════════════════════════
+
+1. Open your web browser
+2. Go to: http://localhost/phpmyadmin
+3. You should see phpMyAdmin interface
+
+═══════════════════════════════════════════════════════════════
+STEP 2: Select Database
+═══════════════════════════════════════════════════════════════
+
+1. Look at the LEFT SIDEBAR
+2. Find and CLICK on: "lms_bolando"
+3. The database name should be highlighted/selected
+
+═══════════════════════════════════════════════════════════════
+STEP 3: Open SQL Tab
+═══════════════════════════════════════════════════════════════
+
+1. Look at the TOP MENU BAR
+2. Find and CLICK on: "SQL" tab
+3. You should see a text area where you can type SQL
+
+═══════════════════════════════════════════════════════════════
+STEP 4: Copy and Paste SQL
+═══════════════════════════════════════════════════════════════
+
+Copy this ENTIRE SQL (from CREATE to semicolon):
+
+CREATE TABLE IF NOT EXISTS `announcements` (
+  `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NOT NULL,
+  `content` TEXT NOT NULL,
+  `created_at` DATETIME NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+Paste it into the SQL text area in phpMyAdmin
+
+═══════════════════════════════════════════════════════════════
+STEP 5: Execute SQL
+═══════════════════════════════════════════════════════════════
+
+1. Click the "Go" button (usually at the bottom right)
+2. Wait a few seconds
+3. You should see a GREEN success message:
+   "Table announcements created successfully"
+
+═══════════════════════════════════════════════════════════════
+STEP 6: Verify Table Created
+═══════════════════════════════════════════════════════════════
+
+1. Look at the LEFT SIDEBAR again
+2. Under "lms_bolando" database
+3. You should now see: "announcements" in the list
+4. If you see it, the table was created successfully!
+
+═══════════════════════════════════════════════════════════════
+STEP 7: Refresh Your Page
+═══════════════════════════════════════════════════════════════
+
+1. Go back to your application
+2. Refresh the page (F5 or click refresh)
+3. The error should be GONE!
+
+═══════════════════════════════════════════════════════════════
+TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+If you get an error when running SQL:
+
+1. Make sure you selected "lms_bolando" database first
+2. Make sure you copied the ENTIRE SQL (including semicolon)
+3. Check if "announcements" table already exists
+   - If it exists, you'll get a warning but it's OK
+4. If you see "Access denied" - check your database user permissions
+
+═══════════════════════════════════════════════════════════════
+ALTERNATIVE: Create All Tables at Once
+═══════════════════════════════════════════════════════════════
+
+If you want to create ALL missing tables (announcements, 
+notifications, materials) at once:
+
+1. Open phpMyAdmin
+2. Select "lms_bolando" database
+3. Click "SQL" tab
+4. Open the file: CREATE_ALL_TABLES.sql
+5. Copy ALL the SQL from that file
+6. Paste in phpMyAdmin
+7. Click "Go"
+
+This will create all 3 tables at once!
+
+═══════════════════════════════════════════════════════════════
+

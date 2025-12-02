@@ -53,3 +53,27 @@ $routes->post('admin/course/(:num)/upload', 'Materials::upload/$1');
 $routes->get('materials/delete/(:num)', 'Materials::delete/$1');
 $routes->get('materials/download/(:num)', 'Materials::download/$1');
 $routes->get('materials/view/(:num)', 'Materials::view/$1');
+
+// Notifications Routes
+$routes->get('notifications', 'Notifications::get');
+$routes->post('notifications/mark_read/(:num)', 'Notifications::mark_as_read/$1');
+$routes->get('test-notifications', 'TestNotifications::index');
+
+// Notification Debug Routes
+$routes->get('notification-debug', 'NotificationDebug::index');
+$routes->get('notification-debug/create-test', 'NotificationDebug::createTest');
+$routes->get('create-notification-test', function() {
+    return view('create_notification_test');
+});
+
+// Create Tables Route
+$routes->get('create-tables', 'CreateTables::index');
+
+// Test Notification Route
+$routes->get('test-notification/create', 'TestNotification::create');
+
+// Quick Test Route
+$routes->get('quick-test', 'QuickTest::index');
+
+// Notification Diagnostic Route
+$routes->get('notification-diagnostic', 'NotificationDiagnostic::index');

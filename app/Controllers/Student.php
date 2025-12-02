@@ -125,6 +125,26 @@ class Student extends BaseController
         $enrollmentId = $this->enrollmentModel->enrollUser($enrollmentData);
 
         if ($enrollmentId) {
+            // Create notification for student enrollment
+            try {
+                $db = \Config\Database::connect();
+                if ($db->tableExists('notifications')) {
+                    $notificationModel = new \App\Models\NotificationModel();
+                    $notificationData = [
+                        'user_id' => $user_id,
+                        'message' => 'You have been enrolled in ' . $course['title'],
+                        'is_read' => 0
+                    ];
+                    $notificationId = $notificationModel->createNotification($notificationData);
+                    log_message('info', 'Notification created: ID ' . $notificationId . ' for user ' . $user_id);
+                } else {
+                    log_message('warning', 'Notifications table does not exist. Skipping notification creation.');
+                }
+            } catch (\Exception $e) {
+                // Log error but don't fail enrollment
+                log_message('error', 'Failed to create notification: ' . $e->getMessage());
+            }
+            
             session()->setFlashdata('success', 'Successfully enrolled in ' . $course['title'] . '!');
             return redirect()->to(base_url('student/dashboard'));
         } else {

@@ -1,0 +1,102 @@
+═══════════════════════════════════════════════════════════════
+  SIMPLE STEP-BY-STEP TEST FOR NOTIFICATIONS
+═══════════════════════════════════════════════════════════════
+
+STEP 1: CREATE THE TABLE
+───────────────────────────────────────────────────────────────
+1. Open: http://localhost/ITE311-BOLANDO/create-tables
+2. Look for: "Notifications table created successfully!" ✅
+   OR "Table already exists" ✅
+3. If you see an error, share it with me.
+
+STEP 2: LOGIN AS STUDENT
+───────────────────────────────────────────────────────────────
+1. Go to: http://localhost/ITE311-BOLANDO/login
+2. Email: student@gmail.com
+3. Password: student123
+4. Click "Login"
+
+STEP 3: CREATE A TEST NOTIFICATION
+───────────────────────────────────────────────────────────────
+1. Go to: http://localhost/ITE311-BOLANDO/notification-debug
+2. Click the button: "Create Test Notification"
+3. You should see: "Test notification created successfully!"
+4. Refresh the page
+5. You should see the notification in the table
+
+STEP 4: CHECK THE NOTIFICATION BADGE
+───────────────────────────────────────────────────────────────
+1. Go to: http://localhost/ITE311-BOLANDO/student/dashboard
+2. Look at the TOP navigation bar
+3. Find "Notifications" with a bell icon 🔔
+4. DO YOU SEE A RED BADGE WITH A NUMBER? (like "1" or "2")
+   ✅ YES → Go to Step 5
+   ❌ NO → Open browser console (F12) and check for errors
+
+STEP 5: CLICK NOTIFICATIONS DROPDOWN
+───────────────────────────────────────────────────────────────
+1. Click on "Notifications" in the navigation bar
+2. A dropdown menu should open
+3. DO YOU SEE YOUR NOTIFICATION(S)?
+   ✅ YES → Go to Step 6
+   ❌ NO → Check browser console (F12) for errors
+
+STEP 6: TEST ENROLLMENT NOTIFICATION
+───────────────────────────────────────────────────────────────
+1. On the Student Dashboard, scroll to "Available Courses"
+2. Find a course you haven't enrolled in
+3. Click the "Enroll" button
+4. Wait for success message
+5. DO YOU SEE A NEW NOTIFICATION?
+   ✅ YES → Go to Step 7
+   ❌ NO → Check if table exists and check browser console
+
+STEP 7: MARK AS READ
+───────────────────────────────────────────────────────────────
+1. Click "Notifications" dropdown
+2. Find an unread notification
+3. Click the "Mark as Read" button (✓)
+4. DOES THE BADGE COUNT DECREASE?
+   ✅ YES → SUCCESS! Everything works!
+   ❌ NO → Check browser console for errors
+
+═══════════════════════════════════════════════════════════════
+  TROUBLESHOOTING
+═══════════════════════════════════════════════════════════════
+
+IF NO BADGE APPEARS:
+───────────────────────────────────────────────────────────────
+1. Press F12 to open browser console
+2. Look for messages starting with:
+   - "🔔 Notifications script loaded"
+   - "📡 Fetching notifications"
+   - "✅ Notifications response received"
+3. If you see errors (red text), share them with me
+
+IF BADGE SHOWS BUT DROPDOWN IS EMPTY:
+───────────────────────────────────────────────────────────────
+1. Go to: http://localhost/ITE311-BOLANDO/quick-test
+2. Check if notifications exist in database
+3. Check if your user_id matches
+
+IF ENROLLMENT DOESN'T CREATE NOTIFICATION:
+───────────────────────────────────────────────────────────────
+1. Go to: http://localhost/ITE311-BOLANDO/quick-test
+2. Enroll in a course
+3. Refresh quick-test page
+4. Check if notification appears
+
+═══════════════════════════════════════════════════════════════
+  QUICK CHECKLIST
+═══════════════════════════════════════════════════════════════
+
+□ Table exists? → http://localhost/ITE311-BOLANDO/create-tables
+□ Logged in as student? → student@gmail.com / student123
+□ Test notification created? → notification-debug page
+□ Badge appears? → Check navigation bar
+□ Dropdown works? → Click "Notifications"
+□ Enrollment creates notification? → Enroll in a course
+□ Mark as read works? → Click ✓ button
+
+═══════════════════════════════════════════════════════════════
+

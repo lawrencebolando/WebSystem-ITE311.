@@ -120,6 +120,22 @@ class Course extends Controller
         $enrollmentId = $this->enrollmentModel->enrollUser($enrollmentData);
 
         if ($enrollmentId) {
+            // Create notification for student enrollment
+            try {
+                $notificationModel = new \App\Models\NotificationModel();
+                $notificationData = [
+                    'user_id' => $user_id,
+                    'message' => 'You have been enrolled in ' . $course['title'],
+                    'is_read' => 0
+                ];
+                $notificationId = $notificationModel->createNotification($notificationData);
+                // Log for debugging (remove in production)
+                log_message('info', 'Notification created: ID ' . $notificationId . ' for user ' . $user_id);
+            } catch (\Exception $e) {
+                // Log error but don't fail enrollment
+                log_message('error', 'Failed to create notification: ' . $e->getMessage());
+            }
+
             // Get the enrollment with course details for the response
             $allEnrollments = $this->enrollmentModel->getUserEnrollments($user_id);
             $newEnrollment = null;
