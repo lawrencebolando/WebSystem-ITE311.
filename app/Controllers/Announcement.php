@@ -54,6 +54,40 @@ class Announcement extends BaseController
 
     public function delete($id = null)
     {
-        echo "Delete announcement with ID: " . $id;
+        // Check if user is logged in
+        if (!session()->get('isLoggedIn')) {
+            session()->setFlashdata('error', 'You must be logged in to delete announcements.');
+            return redirect()->to(base_url('login'));
+        }
+
+        // Check if user is admin (only admins can delete announcements)
+        if (session()->get('role') !== 'admin') {
+            session()->setFlashdata('error', 'Access denied. Only administrators can delete announcements.');
+            return redirect()->to(base_url('announcements'));
+        }
+
+        // Validate ID
+        if (!$id) {
+            session()->setFlashdata('error', 'Invalid announcement ID.');
+            return redirect()->to(base_url('announcements'));
+        }
+
+        $model = new AnnouncementModel();
+        
+        // Check if announcement exists
+        $announcement = $model->find($id);
+        if (!$announcement) {
+            session()->setFlashdata('error', 'Announcement not found.');
+            return redirect()->to(base_url('announcements'));
+        }
+
+        // Delete announcement
+        if ($model->delete($id)) {
+            session()->setFlashdata('success', 'Announcement deleted successfully.');
+        } else {
+            session()->setFlashdata('error', 'Failed to delete announcement. Please try again.');
+        }
+
+        return redirect()->to(base_url('announcements'));
     }
 }

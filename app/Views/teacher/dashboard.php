@@ -55,7 +55,7 @@
   <div class="card shadow-sm mb-3">
     <div class="card-header fw-semibold d-flex justify-content-between align-items-center">
       <span><i class="bi bi-book"></i> My Courses</span>
-      <a href="<?= base_url('courses') ?>" class="btn btn-sm btn-primary">Create New Course</a>
+      <a href="<?= base_url('courses') ?>" class="btn btn-sm btn-primary">View All Courses</a>
     </div>
     <div class="card-body">
       <?php if (!empty($myCourses)): ?>
@@ -89,7 +89,7 @@
         <div class="text-center py-4">
           <i class="bi bi-book" style="font-size: 3rem;" class="text-muted mb-3"></i>
           <p class="text-muted">You haven't created any courses yet.</p>
-          <a href="<?= base_url('courses') ?>" class="btn btn-primary">Create Your First Course</a>
+          <a href="<?= base_url('courses') ?>" class="btn btn-primary">View All Courses</a>
         </div>
       <?php endif; ?>
     </div>

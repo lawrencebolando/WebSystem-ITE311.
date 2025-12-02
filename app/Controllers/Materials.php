@@ -236,7 +236,7 @@ class Materials extends Controller
     }
 
     /**
-     * View materials for a course (Student view)
+     * View materials for a course
      * 
      * @param int $course_id Course ID
      */
@@ -251,25 +251,58 @@ class Materials extends Controller
         $userRole = session()->get('role');
         $userId = session()->get('user_id');
 
-        // Get course info
-        $course = $this->courseModel->find($course_id);
+        // Get course info with instructor name
+        $course = $this->courseModel->getCourseWithInstructor($course_id);
         if (!$course) {
             session()->setFlashdata('error', 'Course not found.');
             return redirect()->back();
         }
 
-        // Check if student is enrolled
+        // Check permissions based on role
         if ($userRole === 'student') {
+            // Students must be enrolled in the course
             if (!$this->enrollmentModel->isAlreadyEnrolled($userId, $course_id)) {
                 session()->setFlashdata('error', 'You must be enrolled in this course to view materials.');
-                return redirect()->back();
+                return redirect()->to(base_url('courses'));
             }
+        } elseif ($userRole === 'teacher') {
+            // Teachers can view materials from their own courses
+            if ($course['instructor_id'] != $userId) {
+                session()->setFlashdata('error', 'You can only view materials from your own courses.');
+                return redirect()->to(base_url('teacher/dashboard'));
+            }
+        } elseif ($userRole !== 'admin') {
+            session()->setFlashdata('error', 'You do not have permission to view materials.');
+            return redirect()->to(base_url('dashboard'));
+        }
+
+        // Get materials (already includes uploaded_by_name from join in model)
+        $materials = $this->materialModel->getMaterialsByCourse($course_id);
+        
+        // Ensure uploaded_by_name is set for all materials
+        foreach ($materials as &$material) {
+            if (empty($material['uploaded_by_name'])) {
+                $material['uploaded_by_name'] = 'Unknown';
+            }
+        }
+
+        // Determine back URL based on role
+        $backUrl = base_url('courses');
+        if ($userRole === 'student') {
+            $backUrl = base_url('student/dashboard');
+        } elseif ($userRole === 'teacher') {
+            $backUrl = base_url('teacher/dashboard');
+        } elseif ($userRole === 'admin') {
+            $backUrl = base_url('admin/courses');
         }
 
         $data = [
             'title' => 'Course Materials - ' . $course['title'],
             'course' => $course,
-            'materials' => $this->materialModel->getMaterialsByCourse($course_id)
+            'materials' => $materials,
+            'userRole' => $userRole,
+            'backUrl' => $backUrl,
+            'canUpload' => ($userRole === 'admin' || ($userRole === 'teacher' && $course['instructor_id'] == $userId))
         ];
 
         return view('materials/view', $data);

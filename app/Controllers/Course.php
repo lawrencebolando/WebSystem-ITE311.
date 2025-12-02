@@ -247,4 +247,51 @@ class Course extends Controller
 
         return view('courses/my_enrollments', $data);
     }
+
+    /**
+     * Search courses
+     * Handles both GET and POST requests
+     * Returns JSON for AJAX requests or renders view for regular requests
+     */
+    public function search()
+    {
+        // Get search term from GET or POST
+        $searchTerm = $this->request->getGet('search_term') ?? $this->request->getPost('search_term');
+
+        // Build query
+        $query = $this->courseModel->select('courses.*, users.name as instructor_name')
+            ->join('users', 'users.id = courses.instructor_id')
+            ->where('courses.status', 'published');
+
+        // Apply search if term is provided
+        if (!empty($searchTerm)) {
+            $query->groupStart()
+                ->like('courses.title', $searchTerm)
+                ->orLike('courses.description', $searchTerm)
+                ->orLike('courses.category', $searchTerm)
+                ->orLike('users.name', $searchTerm)
+                ->groupEnd();
+        }
+
+        // Get results
+        $courses = $query->findAll();
+
+        // Return JSON for AJAX requests
+        if ($this->request->isAJAX()) {
+            return $this->response->setJSON([
+                'success' => true,
+                'courses' => $courses,
+                'count' => count($courses)
+            ]);
+        }
+
+        // Return view for regular requests
+        $data = [
+            'title' => 'Search Results',
+            'courses' => $courses,
+            'searchTerm' => $searchTerm
+        ];
+
+        return view('courses/index', $data);
+    }
 }
