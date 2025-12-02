@@ -72,6 +72,9 @@
                                             <a href="<?= base_url('admin/courses/edit/' . $course['id']) ?>" class="btn btn-outline-primary" title="Edit">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
+                                            <a href="<?= base_url('admin/course/' . $course['id'] . '/upload') ?>" class="btn btn-outline-success" title="Upload Material">
+                                                <i class="bi bi-cloud-upload"></i>
+                                            </a>
                                             <a href="<?= base_url('admin/courses/delete/' . $course['id']) ?>" 
                                                class="btn btn-outline-danger" 
                                                title="Delete"

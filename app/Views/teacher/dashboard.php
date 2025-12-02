@@ -74,8 +74,11 @@
                       <?= ($course['student_count'] ?? 0) ?> students
                     </small>
                   </div>
-                  <div class="mt-2">
+                  <div class="mt-2 d-flex gap-2">
                     <a href="<?= base_url('courses/' . $course['id']) ?>" class="btn btn-sm btn-outline-primary">View Course</a>
+                    <a href="<?= base_url('admin/course/' . $course['id'] . '/upload') ?>" class="btn btn-sm btn-outline-success">
+                      <i class="bi bi-cloud-upload"></i> Materials
+                    </a>
                   </div>
                 </div>
               </div>

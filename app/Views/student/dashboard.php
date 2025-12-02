@@ -49,6 +49,11 @@
                     </div>
                     <small class="text-muted"><?= number_format($enrollment['progress'], 1) ?>% Complete</small>
                   </div>
+                  <div class="mt-2">
+                    <a href="<?= base_url('materials/view/' . $enrollment['course_id']) ?>" class="btn btn-sm btn-outline-primary">
+                      <i class="bi bi-folder"></i> View Materials
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
