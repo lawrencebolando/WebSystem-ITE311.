@@ -11,93 +11,35 @@ class EnrollmentModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType = 'array';
     protected $useSoftDeletes = false;
-<<<<<<< HEAD
     protected $protectFields = true;
-    protected $allowedFields = [
-        'user_id',
-        'course_id',
-        'enrolled_at',
-        'status',
-        'progress',
-        'completed_at',
-        'created_at',
-        'updated_at'
-    ];
-
-    // Dates
-=======
-
+    
     protected $allowedFields = [
         'user_id',
         'course_id',
         'enrollment_date',
         'status',
-        'progress'
+        'progress',
+        'created_at',
+        'updated_at'
     ];
 
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
+    // Dates
     protected $useTimestamps = true;
     protected $dateFormat = 'datetime';
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
-<<<<<<< HEAD
-    // Validation
-    protected $validationRules = [
-        'user_id' => 'required|integer',
-        'course_id' => 'required|integer',
-        'enrolled_at' => 'required|valid_date',
-        'status' => 'required|in_list[active,inactive,completed,dropped]',
-        'progress' => 'permit_empty|integer|greater_than_equal_to[0]|less_than_equal_to[100]'
-=======
     protected $validationRules = [
         'user_id' => 'required|integer',
         'course_id' => 'required|integer',
         'enrollment_date' => 'required|valid_date',
         'status' => 'in_list[active,completed,dropped,suspended]',
         'progress' => 'decimal'
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
     ];
 
     protected $validationMessages = [
         'user_id' => [
             'required' => 'User ID is required',
-<<<<<<< HEAD
-            'integer' => 'Invalid user ID'
-        ],
-        'course_id' => [
-            'required' => 'Course ID is required',
-            'integer' => 'Invalid course ID'
-        ],
-        'enrolled_at' => [
-            'required' => 'Enrollment date is required',
-            'valid_date' => 'Invalid enrollment date'
-        ],
-        'status' => [
-            'required' => 'Enrollment status is required',
-            'in_list' => 'Invalid enrollment status'
-        ],
-        'progress' => [
-            'integer' => 'Progress must be a number',
-            'greater_than_equal_to' => 'Progress cannot be negative',
-            'less_than_equal_to' => 'Progress cannot exceed 100%'
-        ]
-    ];
-
-    protected $skipValidation = false;
-    protected $cleanValidationRules = true;
-
-    // Callbacks
-    protected $allowCallbacks = true;
-    protected $beforeInsert = [];
-    protected $afterInsert = [];
-    protected $beforeUpdate = [];
-    protected $afterUpdate = [];
-    protected $beforeFind = [];
-    protected $afterFind = [];
-    protected $beforeDelete = [];
-    protected $afterDelete = [];
-=======
             'integer' => 'User ID must be an integer'
         ],
         'course_id' => [
@@ -112,6 +54,9 @@ class EnrollmentModel extends Model
             'in_list' => 'Status must be one of: active, completed, dropped, suspended'
         ]
     ];
+
+    protected $skipValidation = false;
+    protected $cleanValidationRules = true;
 
     /**
      * Enroll a user in a course
@@ -225,5 +170,4 @@ class EnrollmentModel extends Model
                     ->orderBy('enrollments.enrollment_date', 'DESC')
                     ->findAll();
     }
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
 }

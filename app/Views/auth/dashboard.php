@@ -2,16 +2,15 @@
 
 <?= $this->section('content') ?>
 <div class="container mt-4">
-<<<<<<< HEAD
     <?php if(session()->getFlashdata('success')): ?>
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
-=======
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
+    
+    <?php if(session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
+    <?php endif; ?>
     
     <!-- Welcome Message -->
-
-
     <?php
       // Wrapper: load role-specific partials
       $role = $user['role'] ?? session('role');

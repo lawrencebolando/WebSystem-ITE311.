@@ -22,9 +22,15 @@ $routes->get('dashboard', 'Auth::dashboard');
 $routes->get('admin/dashboard', 'Admin::dashboard');
 $routes->get('teacher/dashboard', 'Teacher::dashboard');
 $routes->get('student/dashboard', 'Student::dashboard');
-<<<<<<< HEAD
-=======
 $routes->post('student/enroll', 'Student::enroll');
+
+// Admin Course Management Routes
+$routes->get('admin/courses', 'Admin::courses');
+$routes->get('admin/courses/create', 'Admin::createCourse');
+$routes->post('admin/courses/store', 'Admin::storeCourse');
+$routes->get('admin/courses/edit/(:num)', 'Admin::editCourse/$1');
+$routes->post('admin/courses/update/(:num)', 'Admin::updateCourse/$1');
+$routes->get('admin/courses/delete/(:num)', 'Admin::deleteCourse/$1');
 
 // Course Routes
 $routes->get('courses', 'Course::index');
@@ -40,4 +46,3 @@ $routes->post('add-announcement', 'Announcement::add');
 $routes->get('edit-announcement/(:num)', 'Announcement::edit/$1');
 $routes->post('edit-announcement/(:num)', 'Announcement::edit/$1');
 $routes->get('delete-announcement/(:num)', 'Announcement::delete/$1');
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431

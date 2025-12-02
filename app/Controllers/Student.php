@@ -3,11 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-<<<<<<< HEAD
-
-class Student extends BaseController
-{
-=======
 use App\Models\EnrollmentModel;
 use App\Models\CourseModel;
 
@@ -22,7 +17,6 @@ class Student extends BaseController
         $this->courseModel = new CourseModel();
     }
 
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
     public function dashboard()
     {
         // Must be logged in
@@ -37,29 +31,23 @@ class Student extends BaseController
             return redirect()->to(base_url('login'));
         }
 
-<<<<<<< HEAD
-        return view('auth/dashboard', [
-            'user' => [
-              'name'  => session('name'),
-              'email' => session('email'),
-              'role'  => session('role'),
-            ]
-          ]);
-        }
-=======
         $user_id = session()->get('user_id');
 
         // Get user's enrollments
         $enrollments = $this->enrollmentModel->getUserEnrollments($user_id);
 
-        // Get available courses (courses not enrolled in)
+        // Get available courses (courses not enrolled in) with instructor information
         $enrolled_course_ids = array_column($enrollments, 'course_id');
         $available_courses = [];
         
         if (!empty($enrolled_course_ids)) {
-            $available_courses = $this->courseModel->whereNotIn('id', $enrolled_course_ids)->findAll();
+            $available_courses = $this->courseModel->select('courses.*, users.name as instructor_name')
+                ->join('users', 'users.id = courses.instructor_id')
+                ->where('courses.status', 'published')
+                ->whereNotIn('courses.id', $enrolled_course_ids)
+                ->findAll();
         } else {
-            $available_courses = $this->courseModel->findAll();
+            $available_courses = $this->courseModel->getCoursesWithInstructor();
         }
 
         // Calculate overall progress
@@ -69,7 +57,7 @@ class Student extends BaseController
             $overall_progress = $total_progress / count($enrollments);
         }
 
-        return view('auth/dashboard', [
+        return view('student/dashboard', [
             'user' => [
                 'name' => session('name'),
                 'email' => session('email'),
@@ -86,13 +74,13 @@ class Student extends BaseController
         // Check if user is logged in
         if (!session()->get('isLoggedIn')) {
             session()->setFlashdata('error', 'Please login to enroll in courses.');
-            return redirect()->to('login');
+            return redirect()->to(base_url('login'));
         }
 
         // Check if user is a student
         if (session()->get('role') !== 'student') {
             session()->setFlashdata('error', 'Access denied. Student role required.');
-            return redirect()->to('login');
+            return redirect()->to(base_url('login'));
         }
 
         // Get course_id from POST request
@@ -100,7 +88,7 @@ class Student extends BaseController
         
         if (!$course_id) {
             session()->setFlashdata('error', 'Course ID is required.');
-            return redirect()->to('student/dashboard');
+            return redirect()->to(base_url('student/dashboard'));
         }
 
         // Get user ID from session only (never trust client data)
@@ -108,20 +96,20 @@ class Student extends BaseController
         
         if (!$user_id) {
             session()->setFlashdata('error', 'User session not found.');
-            return redirect()->to('login');
+            return redirect()->to(base_url('login'));
         }
 
         // Validate course exists
         $course = $this->courseModel->find($course_id);
         if (!$course) {
             session()->setFlashdata('error', 'Course not found.');
-            return redirect()->to('student/dashboard');
+            return redirect()->to(base_url('student/dashboard'));
         }
 
         // Check if user is already enrolled
         if ($this->enrollmentModel->isAlreadyEnrolled($user_id, $course_id)) {
             session()->setFlashdata('error', 'You are already enrolled in this course.');
-            return redirect()->to('student/dashboard');
+            return redirect()->to(base_url('student/dashboard'));
         }
 
         // Prepare enrollment data
@@ -138,11 +126,10 @@ class Student extends BaseController
 
         if ($enrollmentId) {
             session()->setFlashdata('success', 'Successfully enrolled in ' . $course['title'] . '!');
-            return redirect()->to('student/dashboard');
+            return redirect()->to(base_url('student/dashboard'));
         } else {
             session()->setFlashdata('error', 'Failed to enroll in course. Please try again.');
-            return redirect()->to('student/dashboard');
+            return redirect()->to(base_url('student/dashboard'));
         }
     }
->>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
 }

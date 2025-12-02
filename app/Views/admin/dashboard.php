@@ -1,6 +1,9 @@
+<?= $this->extend('template') ?>
+
+<?= $this->section('content') ?>
 <div class="container py-4">
   <h3 class="mb-3 text-primary">Admin Dashboard</h3>
-  <p>Welcome, <?= esc($name ?? 'Admin') ?>!</p>
+  <p>Welcome, <?= esc(session('name') ?? 'Admin') ?>!</p>
 
   <div class="row g-3">
     <div class="col-md-3">
@@ -44,3 +47,5 @@
     </div>
   </div>
 </div>
+<?= $this->endSection() ?>
+
