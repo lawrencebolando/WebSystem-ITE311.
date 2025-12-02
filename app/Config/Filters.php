@@ -12,6 +12,10 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+<<<<<<< HEAD
+=======
+use App\Filters\RoleAuth;
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
 
 class Filters extends BaseFilters
 {
@@ -34,6 +38,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+<<<<<<< HEAD
+=======
+        'roleauth'      => RoleAuth::class,
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
     ];
 
     /**
@@ -73,7 +81,11 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             // 'honeypot',
+<<<<<<< HEAD
             // 'csrf',
+=======
+            'csrf',
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
             // 'invalidchars',
         ],
         'after' => [
@@ -106,5 +118,11 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
+<<<<<<< HEAD
     public array $filters = [];
+=======
+    public array $filters = [
+        'roleauth' => ['before' => ['admin/*', 'teacher/*', 'student/*', 'add-announcement*', 'edit-announcement*', 'delete-announcement*']],
+    ];
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
 }

@@ -2,9 +2,12 @@
 
 <?= $this->section('content') ?>
 <div class="container mt-4">
+<<<<<<< HEAD
     <?php if(session()->getFlashdata('success')): ?>
         <div class="alert alert-success"><?= session()->getFlashdata('success') ?></div>
     <?php endif; ?>
+=======
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
     
     <!-- Welcome Message -->
 

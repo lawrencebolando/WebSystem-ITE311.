@@ -3,15 +3,22 @@
         <div class="container">
             <a class="navbar-brand" href="<?= base_url(''); ?>">
                 <?php if (session()->get('isLoggedIn')): ?>
+<<<<<<< HEAD
                     Welcome, <?= session()->get('user_name') ?>
                 <?php else: ?>
                     LMS-ALALAWI
+=======
+                    Welcome, <?= session()->get('name') ?>
+                <?php else: ?>
+                    LMS-BOLANDO
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
                 <?php endif; ?>
             </a>
             <ul class="navbar-nav">
                     <?php if (session()->get('isLoggedIn')): ?>
                         <?php $role = strtolower(session('role') ?? ''); ?>
                         <?php if ($role === 'admin'): ?>
+<<<<<<< HEAD
                             <li><a class="nav-link" href="<?= base_url('dashboard'); ?>">Admin Dashboard</a></li>
                             <li><a class="nav-link" href="<?= base_url('admin/users'); ?>">Manage Users</a></li>
                             <li><a class="nav-link" href="<?= base_url('admin/settings'); ?>">Settings</a></li>
@@ -21,6 +28,17 @@
                             <li><a class="nav-link" href="<?= base_url('teacher/grades'); ?>">Grades</a></li>
                         <?php elseif ($role === 'student'): ?>
                             <li><a class="nav-link" href="<?= base_url('dashboard'); ?>">Student Dashboard</a></li>
+=======
+                            <li><a class="nav-link" href="<?= base_url('admin/dashboard'); ?>">Admin Dashboard</a></li>
+                            <li><a class="nav-link" href="<?= base_url('admin/users'); ?>">Manage Users</a></li>
+                            <li><a class="nav-link" href="<?= base_url('admin/settings'); ?>">Settings</a></li>
+                        <?php elseif ($role === 'teacher'): ?>
+                            <li><a class="nav-link" href="<?= base_url('teacher/dashboard'); ?>">Teacher Dashboard</a></li>
+                            <li><a class="nav-link" href="<?= base_url('teacher/courses'); ?>">My Courses</a></li>
+                            <li><a class="nav-link" href="<?= base_url('teacher/grades'); ?>">Grades</a></li>
+                        <?php elseif ($role === 'student'): ?>
+                            <li><a class="nav-link" href="<?= base_url('student/dashboard'); ?>">Student Dashboard</a></li>
+>>>>>>> 4a1a97d7431256126dcbdcf0e1514639c3bfc431
                             <li><a class="nav-link" href="<?= base_url('student/enrollments'); ?>">My Enrollments</a></li>
                             <li><a class="nav-link" href="<?= base_url('student/assignments'); ?>">Assignments</a></li>
                         <?php else: ?>
